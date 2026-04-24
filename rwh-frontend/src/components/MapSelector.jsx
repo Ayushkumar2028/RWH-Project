@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { LayersControl, MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import * as turf from "@turf/turf";
 
@@ -14,6 +14,13 @@ L.Icon.Default.mergeOptions({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
 });
+
+const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
+const mapTilerHybridUrl = MAPTILER_API_KEY
+  ? `https://api.maptiler.com/maps/hybrid-v4/{z}/{x}/{y}.jpg?key=${MAPTILER_API_KEY}`
+  : null;
+const mapTilerAttribution =
+  '&copy; <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noreferrer">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap contributors</a>';
 
 function MapFlyTo({ center, zoom }) {
   const map = useMap();
@@ -193,12 +200,29 @@ function MapSelector({ setPolygonData, area, setArea, searchedLocation }) {
         scrollWheelZoom={true}
         className="h-[60vh] md:h-[650px] w-full rounded-2xl z-0 shadow border border-slate-200"
       >
-        <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          maxNativeZoom={19}
-          maxZoom={22}
-        />
+        <LayersControl position="topright">
+          <LayersControl.BaseLayer checked name="Street Map">
+            <TileLayer
+              attribution="&copy; OpenStreetMap contributors"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maxNativeZoom={19}
+              maxZoom={22}
+            />
+          </LayersControl.BaseLayer>
+
+          {mapTilerHybridUrl && (
+            <LayersControl.BaseLayer name="Satellite View">
+              <TileLayer
+                attribution={mapTilerAttribution}
+                url={mapTilerHybridUrl}
+                tileSize={512}
+                zoomOffset={-1}
+                maxZoom={22}
+                crossOrigin={true}
+              />
+            </LayersControl.BaseLayer>
+          )}
+        </LayersControl>
 
         {searchedLocation && <MapFlyTo center={searchedLocation} zoom={17} />}
 
@@ -225,4 +249,4 @@ function MapSelector({ setPolygonData, area, setArea, searchedLocation }) {
   );
 }
 
-export default MapSelector;
+export default MapSelector;

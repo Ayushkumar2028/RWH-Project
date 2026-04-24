@@ -86,10 +86,10 @@ function Result() {
                 <div className="space-y-3 text-sm">
                   <p><span className="font-semibold">Sand %:</span> {assessment.soil_sand_pct}</p>
                   <p><span className="font-semibold">Clay %:</span> {assessment.soil_clay_pct}</p>
-                  <p><span className="font-semibold">Slope (deg):</span> {assessment.slope_deg}</p>
-                  <p><span className="font-semibold">Ruggedness TRI:</span> {assessment.ruggedness_tri}</p>
-                  <p><span className="font-semibold">Max Dry Days:</span> {assessment.max_dry_days}</p>
-                  <p><span className="font-semibold">Peak Daily Rainfall:</span> {assessment.peak_daily_mm}</p>
+                  <p><span className="font-semibold">Slope (deg):</span> {assessment.slope_deg} deg</p>
+                  <p><span className="font-semibold">Ruggedness TRI:</span> {assessment.ruggedness_tri} index</p>
+                  <p><span className="font-semibold">Max Dry Days:</span> {assessment.max_dry_days} days</p>
+                  <p><span className="font-semibold">Peak Daily Rainfall:</span> {assessment.peak_daily_mm} mm/day</p>
                 </div>
               </div>
 

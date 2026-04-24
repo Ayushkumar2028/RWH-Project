@@ -341,10 +341,10 @@ def generate_assessment_pdf(assessment):
     subtitle("Terrain & Soil Analysis")
     line("Sand %", assessment.soil_sand_pct)
     line("Clay %", assessment.soil_clay_pct)
-    line("Slope (deg)", assessment.slope_deg)
-    line("Ruggedness TRI", assessment.ruggedness_tri)
-    line("Max Dry Days", assessment.max_dry_days)
-    line("Peak Daily Rainfall", assessment.peak_daily_mm)
+    line("Slope (deg)", f"{assessment.slope_deg} deg")
+    line("Ruggedness TRI", f"{assessment.ruggedness_tri} index")
+    line("Max Dry Days", f"{assessment.max_dry_days} days")
+    line("Peak Daily Rainfall", f"{assessment.peak_daily_mm} mm/day")
 
     y -= 2 * mm
     
